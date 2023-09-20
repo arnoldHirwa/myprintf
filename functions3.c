@@ -161,3 +161,59 @@ int print_reverse(va_list list, int flags, int width, int precision, int size)
 
     return (printed_chars);
 }
+
+/**
+ * handle_specifier - Handles the printing of characters and format specifiers
+ * @specifier: The format specifier character (e.g., 'c', 's', '%', 'd', 'i', 'b', 'u', 'o', 'x', 'X', 'p')
+ * @args: A va_list containing the arguments
+ * @flags: Flags for formatting (e.g., '-', '0')
+ * @width: Minimum field width
+ * @precision: Precision specifier
+ * @size: Size specifier (e.g., 'h', 'l')
+ *
+ * Return: The number of characters printed
+ */
+ 
+int handle_specifier(char specifier, va_list args, int flags, int width, int precision, int size)
+{
+    int printed_chars = 0;
+
+    switch (specifier)
+    {
+        case 'c':
+            printed_chars += print_char(args, flags, width, precision, size);
+            break;
+        case 's':
+            printed_chars += print_string(args, flags, width, precision);
+            break;
+        case '%':
+            printed_chars += print_percent(args, flags);
+            break;
+        case 'd':
+        case 'i':
+            printed_chars += print_int(args, flags, width, precision, size);
+            break;
+        case 'u':
+            printed_chars += print_unsigned(args, flags, width, precision, size);
+            break;
+        case 'o':
+            printed_chars += print_octal(args, flags, width, precision, size);
+            break;
+        case 'x':
+            printed_chars += print_hexadecimal(args, flags, width, precision, size);
+            break;
+        case 'X':
+            printed_chars += print_unsigned_hex(args, flags, width, precision, size);
+            break;
+        case 'b':
+            printed_chars += print_binary(args, flags, width, precision, size);
+            break;
+        case 'p':
+            printed_chars += print_pointer(args);
+            break;
+        default:
+            return (-1);
+    }
+
+    return (printed_chars);
+}
